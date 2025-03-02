@@ -8,6 +8,7 @@ export type Animation = {
   category: string;
   imageUrl: string;
   description: string;
+  pagFile: string; // PAG 文件链接
 };
 
 // 动画卡片组件
