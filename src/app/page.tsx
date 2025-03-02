@@ -4,21 +4,15 @@ import { useState } from 'react';
 // import Image from 'next/image';
 import AnimationCard from './components/AnimationCard';
 import CategoryFilter from './components/CategoryFilter';
-import SearchBar from './components/SearchBar';
 import { animations, categories } from './data/animations';
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
 
-  // 根据选择的分类和搜索词过滤动画
-  const filteredAnimations = animations
-    .filter(animation => !selectedCategory || animation.category === selectedCategory)
-    .filter(animation => 
-      !searchTerm || 
-      animation.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      animation.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  // 根据选择的分类过滤动画
+  const filteredAnimations = selectedCategory
+    ? animations.filter(animation => animation.category === selectedCategory)
+    : animations;
 
   return (
     <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -29,9 +23,6 @@ export default function Home() {
             探索高质量的矢量动画，提升您的用户界面和交互体验
           </p>
         </div>
-        
-        {/* 搜索栏 */}
-        <SearchBar onSearch={setSearchTerm} />
       </header>
 
       <main className="max-w-7xl mx-auto">
@@ -46,13 +37,13 @@ export default function Home() {
         <div className="mb-6 text-center">
           {filteredAnimations.length > 0 ? (
             <p className="text-gray-600 dark:text-gray-400">
-              共找到 <span className="font-bold text-indigo-600 dark:text-indigo-400">{filteredAnimations.length}</span> 个动画
+              共展示 <span className="font-bold text-indigo-600 dark:text-indigo-400">{filteredAnimations.length}</span> 个动画
             </p>
           ) : (
             <div className="py-10 text-center">
-              <p className="text-xl text-gray-600 dark:text-gray-400 mb-2">未找到相关动画</p>
+              <p className="text-xl text-gray-600 dark:text-gray-400 mb-2">该分类暂无动画</p>
               <p className="text-gray-500 dark:text-gray-500">
-                请尝试其他搜索关键词或清除筛选条件
+                请选择其他分类查看
               </p>
             </div>
           )}
