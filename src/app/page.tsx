@@ -1,100 +1,73 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+// import Image from 'next/image';
+import AnimationCard from './components/AnimationCard';
+import CategoryFilter from './components/CategoryFilter';
+import SearchBar from './components/SearchBar';
+import { animations, categories } from './data/animations';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // 根据选择的分类和搜索词过滤动画
+  const filteredAnimations = animations
+    .filter(animation => !selectedCategory || animation.category === selectedCategory)
+    .filter(animation => 
+      !searchTerm || 
+      animation.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      animation.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  return (
+    <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
+      <header className="max-w-7xl mx-auto mb-10">
+        <div className="flex flex-col items-center mb-6">
+          <h1 className="text-4xl font-bold text-center mb-3">矢量动画库</h1>
+          <p className="text-xl text-center text-gray-600 dark:text-gray-300 max-w-3xl">
+            探索高质量的矢量动画，提升您的用户界面和交互体验
+          </p>
+        </div>
+        
+        {/* 搜索栏 */}
+        <SearchBar onSearch={setSearchTerm} />
+      </header>
+
+      <main className="max-w-7xl mx-auto">
+        {/* 分类导航 */}
+        <CategoryFilter 
+          categories={categories} 
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+        />
+
+        {/* 结果状态 */}
+        <div className="mb-6 text-center">
+          {filteredAnimations.length > 0 ? (
+            <p className="text-gray-600 dark:text-gray-400">
+              共找到 <span className="font-bold text-indigo-600 dark:text-indigo-400">{filteredAnimations.length}</span> 个动画
+            </p>
+          ) : (
+            <div className="py-10 text-center">
+              <p className="text-xl text-gray-600 dark:text-gray-400 mb-2">未找到相关动画</p>
+              <p className="text-gray-500 dark:text-gray-500">
+                请尝试其他搜索关键词或清除筛选条件
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* 动画卡片网格 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredAnimations.map((animation) => (
+            <AnimationCard key={animation.id} animation={animation} />
+          ))}
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="max-w-7xl mx-auto mt-20 py-6 text-center text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-800">
+        <p>© {new Date().getFullYear()} 矢量动画库 | 展示优质矢量动画</p>
       </footer>
     </div>
   );
