@@ -1,5 +1,9 @@
 // import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+// 动态导入 Pag 组件以避免 SSR 问题
+const Pag = dynamic(() => import('./Pag'), { ssr: false });
 
 // 动画项类型定义
 export type Animation = {
@@ -17,17 +21,18 @@ export default function AnimationCard({ animation }: { animation: Animation }) {
     <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover-lift">
       <div className="relative h-48">
         <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-          {/* 预览图 */}
-          <div className="text-3xl text-gray-400 dark:text-gray-500 flex items-center justify-center h-full w-full">
-            动画预览
+          {/* PAG 动画预览 */}
+          <div className="w-full h-full flex items-center justify-center">
+            {/* <Pag
+              src={animation.pagFile}
+              animationName={animation.title}
+              repeatCount={0} // 循环播放
+              autoPlay={true}
+              className="w-full h-full"
+              scaleMode={2} // LetterBox 模式
+              useScale={true}
+            /> */}
           </div>
-          {/* 当有真实图片时可以使用下面的代码 */}
-          {/* <Image
-            src={animation.imageUrl}
-            alt={animation.title}
-            fill
-            className="object-cover transition-transform duration-300 hover:scale-105"
-          /> */}
         </div>
       </div>
       <div className="p-4">

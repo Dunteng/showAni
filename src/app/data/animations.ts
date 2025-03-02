@@ -12,7 +12,7 @@ export const categories = [
 ];
 
 // 默认 PAG 文件链接
-const defaultPagFile = "https://music-conf-cdn.y.qq.com/ocs/197cb75_iiTPHuIE/203c619b53342d554e57a093ff9bcdb1.pag";
+const defaultPagFile = "/pag-files/404.pag";
 
 // 模拟动画数据
 export const animations: Animation[] = [
