@@ -152,6 +152,21 @@ export default function AnimationDetail() {
 
           {/* 动画信息 */}
           <div className="p-8 md:w-1/2">
+            {/* 作者头像 */}
+            <div className="flex items-center mb-6">
+              <div className="w-12 h-12 rounded-full overflow-hidden mr-4 border-2 border-indigo-100 dark:border-indigo-900/30">
+                <img 
+                  src={animation.avatar}
+                  alt={`${animation.title} 作者头像`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">动画设计师</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">设计创作者</p>
+              </div>
+            </div>
+
             <div className="flex items-center mb-4">
               <span className="category-tag bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
                 {animation.category}

@@ -1,9 +1,8 @@
+'use client';
+
 // import Image from 'next/image';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
-
-// 动态导入 Pag 组件以避免 SSR 问题
-const Pag = dynamic(() => import('./Pag'), { ssr: false });
+import { useState } from 'react';
 
 // 动画项类型定义
 export type Animation = {
@@ -13,25 +12,35 @@ export type Animation = {
   imageUrl: string;
   description: string;
   pagFile: string; // PAG 文件链接
+  avatar: string; // 头像图片链接
 };
 
 // 动画卡片组件
 export default function AnimationCard({ animation }: { animation: Animation }) {
+  // 图片加载状态
+  const [imageLoading, setImageLoading] = useState(true);
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover-lift">
       <div className="relative h-48">
         <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-          {/* PAG 动画预览 */}
+          {/* 封面图片展示区域 */}
           <div className="w-full h-full flex items-center justify-center">
-            {/* <Pag
-              src={animation.pagFile}
-              animationName={animation.title}
-              repeatCount={0} // 循环播放
-              autoPlay={true}
-              className="w-full h-full"
-              scaleMode={2} // LetterBox 模式
-              useScale={true}
-            /> */}
+            {/* 封面图片 */}
+            <div className="relative w-full h-full">
+              {imageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              )}
+              <img
+                src={animation.avatar}
+                alt={animation.title}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+                onLoad={() => setImageLoading(false)}
+                onError={() => setImageLoading(false)}
+              />
+            </div>
           </div>
         </div>
       </div>
