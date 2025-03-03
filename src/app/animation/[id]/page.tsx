@@ -23,7 +23,6 @@ export default function AnimationDetail() {
   const [animation, setAnimation] = useState<Animation | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [animationDuration, setAnimationDuration] = useState<number | null>(null);
   const pagRef = useRef<ExtendedPagRef>(null);
 
   // 获取动画数据
@@ -58,25 +57,6 @@ export default function AnimationDetail() {
       link.click();
       document.body.removeChild(link);
     }
-  };
-
-  // 播放/暂停控制
-  const handlePlayPause = () => {
-    if (!pagRef.current) return;
-
-    // 检查当前是否是暂停状态
-    if (pagRef.current._isPaused) {
-      pagRef.current.play();
-    } else {
-      pagRef.current.pause();
-    }
-  };
-
-  // 重置动画
-  const handleReset = () => {
-    if (!pagRef.current) return;
-    pagRef.current.setProgress(0);
-    pagRef.current.play();
   };
 
   // 加载中状态
@@ -143,7 +123,6 @@ export default function AnimationDetail() {
                 className="w-full h-full"
                 scaleMode={2} // LetterBox 模式
                 useScale={true}
-                durationCb={(duration) => setAnimationDuration(duration)}
               />
             </div>
 
