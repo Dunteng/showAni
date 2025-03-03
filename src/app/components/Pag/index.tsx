@@ -54,7 +54,6 @@ const initializePAG = async (params: { fontFamily?: { name: string; url: string 
       console.info("加载 libpag.wasm 核心文件成功");
 
       // 初始化PAG
-      // @ts-expect-error
       PAG_INIT = await window.libpag.PAGInit({
         locateFile: () => URL.createObjectURL(WASM_FILE as Blob),
       });
@@ -81,7 +80,6 @@ const initializePAG = async (params: { fontFamily?: { name: string; url: string 
 };
 
 // 提取重复的帧率监控逻辑
-// @ts-expect-error
 const startFPSMonitoring = (pagView: any, src: string, shouldLogFPS: boolean) => {
   if (fpsMonitorTimer) {
     window.clearInterval(fpsMonitorTimer);
@@ -127,7 +125,6 @@ const Pag = forwardRef((props: PagProps, ref) => {
   } = props;
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  // @ts-expect-error
   const pagViewRef = useRef<any | null>(null);
 
   // 暴露给父组件的接口
@@ -314,7 +311,6 @@ const Pag = forwardRef((props: PagProps, ref) => {
     };
 
     try {
-      // @ts-expect-error
       if (window.libpag) {
         initPag();
         return;
