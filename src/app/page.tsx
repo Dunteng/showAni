@@ -18,7 +18,7 @@ export default function Home() {
     <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
       <header className="max-w-7xl mx-auto mb-10">
         <div className="flex flex-col items-center mb-6">
-          <h1 className="text-4xl font-bold text-center mb-3">矢量动画List</h1>
+          <h1 className="text-4xl font-bold text-center mb-3">矢量动画库</h1>
           <p className="text-xl text-center text-gray-600 dark:text-gray-300 max-w-3xl">
             探索高质量的矢量动画，提升您的用户界面和交互体验
           </p>

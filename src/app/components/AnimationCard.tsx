@@ -1,8 +1,10 @@
-'use client';
-
 // import Image from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+// import dynamic from 'next/dynamic';
+
+// 动态导入 Pag 组件以避免 SSR 问题
+// const Pag = dynamic(() => import('./Pag'), { ssr: false });
 
 // 动画项类型定义
 export type Animation = {
@@ -17,31 +19,23 @@ export type Animation = {
 
 // 动画卡片组件
 export default function AnimationCard({ animation }: { animation: Animation }) {
-  // 图片加载状态
-  const [imageLoading, setImageLoading] = useState(true);
-
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover-lift">
       <div className="relative h-48">
         <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-          {/* 封面图片展示区域 */}
-          <div className="w-full h-full flex items-center justify-center">
-            {/* 封面图片 */}
-            <div className="relative w-full h-full">
-              {imageLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-              )}
-              <img
-                src={animation.avatar}
-                alt={animation.title}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
-                onLoad={() => setImageLoading(false)}
-                onError={() => setImageLoading(false)}
-              />
-            </div>
+          {/* 封面图片展示 */}
+          <div className="w-full h-full relative">
+            <Image 
+              src={animation.avatar} 
+              alt={animation.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-contain"
+              priority
+            />
           </div>
+          
+          {/* PAG 动画预览（目前已移除，需要时可以重新添加） */}
         </div>
       </div>
       <div className="p-4">
