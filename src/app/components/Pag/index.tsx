@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
-import type { types } from "libpag";
 import { loadScript } from "./utils/loadScript";
 import { handleError } from "./utils";
 import { PagProps } from "./type";
@@ -83,7 +82,7 @@ const initializePAG = async (params: { fontFamily?: { name: string; url: string 
 
 // 提取重复的帧率监控逻辑
 // @ts-ignore
-const startFPSMonitoring = (pagView: types.PAGView, src: string, shouldLogFPS: boolean) => {
+const startFPSMonitoring = (pagView: any, src: string, shouldLogFPS: boolean) => {
   if (fpsMonitorTimer) {
     window.clearInterval(fpsMonitorTimer);
   }
@@ -129,7 +128,7 @@ const Pag = forwardRef((props: PagProps, ref) => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   // @ts-ignore
-  const pagViewRef = useRef<types.PAGView | null>(null);
+  const pagViewRef = useRef<any | null>(null);
 
   // 暴露给父组件的接口
   useImperativeHandle(ref, () => ({

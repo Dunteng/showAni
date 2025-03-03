@@ -1,4 +1,3 @@
-import { types } from "libpag";
 
 export interface PagProps {
   src: string;
@@ -20,7 +19,7 @@ export interface PagProps {
    * 2 LetterBox 内容会根据原始未缩放图像的宽高比进行缩放。这是默认值。
    * 3 Zoom 内容会根据原始未缩放图像的宽高比进行缩放。这会导致在一个轴上被裁剪。
    */
-  scaleMode?: types.PAGScaleMode;
+  scaleMode?: any;
   /** PAG 会自动缩放 Canvas 的尺寸以适应屏幕的可视尺寸。这个过程可能会改变 Canvas 的宽高以及 style 属性。如果你不希望 PAG 修改 Canvas 的属性，你可以在初始化时取消缩放 */
   useScale?: boolean;
   /** 最大帧率 */
