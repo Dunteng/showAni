@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "preinstall": "echo \"registry=https://registry.npmjs.org/\" > .npmrc",
-    "vercel-build": "rm -f yarn.lock && yarn install && next build"
+    "vercel-build": "next build"
   },
   "dependencies": {
     "next": "15.2.0",
