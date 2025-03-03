@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preinstall": "echo \"registry=https://registry.npmjs.org/\" > .npmrc",
+    "vercel-build": "rm -f yarn.lock && yarn install && next build"
   },
   "dependencies": {
     "libpag": "^4.2.84",
